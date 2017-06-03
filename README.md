@@ -10,4 +10,4 @@ Warning: You need to add "Speech Recognition Usage Description" in plist first
 
 This plugin will return the result of speech recognition, and the volume of speech at same time
 ***
-You can use "cordova plugin add https://github.com/Antonyzhu/BLSpeechRecognition_withVolume" to install
+You can use "cordova plugin add https://github.com/Antonyzhu/BLSpeechRecognition" to install
