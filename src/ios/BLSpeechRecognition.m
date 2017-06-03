@@ -77,23 +77,15 @@
        
        self.bufferTask = [self.bufferRec recognitionTaskWithRequest:self.bufferRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
            
-           if (result.final) {
-               self.bufferRequest = nil;
-               self.bufferTask = nil;
-               
-               [self startListeningIMP];
-           } else {
-               NSString *text = [[NSString alloc] init];
-               text = result.bestTranscription.formattedString;
-               
-               [self.commandDelegate runInBackground:^{
-                   NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:@"SpeechResults",STR_EVENT,text,STR_RESULTS, nil];
-                   CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:info];
-                   [result setKeepCallbackAsBool:YES];
-                   [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
-               }];
-           }
+           NSString *text = [[NSString alloc] init];
+           text = result.bestTranscription.formattedString;
            
+           [self.commandDelegate runInBackground:^{
+               NSDictionary* info = [NSDictionary dictionaryWithObjectsAndKeys:@"SpeechResults",STR_EVENT,text,STR_RESULTS, nil];
+               CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:info];
+               [result setKeepCallbackAsBool:YES];
+               [self.commandDelegate sendPluginResult:result callbackId:self.callbackId];
+           }];
        }];
        
        // 监听一个标识位并拼接流文件
