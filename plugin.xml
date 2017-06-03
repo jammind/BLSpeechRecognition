@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-speech" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>BLSpeechRecognition</name>
+    <js-module name="BLSpeechRecognition" src="www/BLSpeechRecognition.js">
+        <clobbers target="cordova.plugins.BLSpeechRecognition" />
+    </js-module><platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="BLSpeechRecognition">
+                <param name="ios-package" value="BLSpeechRecognition" />
+            </feature>
+        </config-file>
+        <source-file src="src/ios/BLSpeechRecognition.m" />
+        <header-file src="src/ios/BLSpeechRecognition.h" />
+        
+        <source-file src="src/ios/native/AVAudioManager/SpeechManager.m" />
+        <header-file src="src/ios/native/AVAudioManager/SpeechManager.h" />
+        
+        <config-file target="*-Info.plist" parent="Privacy - Speech Recognition Usage Description">
+            <string></string>
+        </config-file>
+    </platform>
+</plugin>
