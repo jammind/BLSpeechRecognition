@@ -134,6 +134,7 @@ Speech.prototype = {
     startListen: function(onResult, options) {
         console.log('speech.startListen 01');
         this.isListening = true;
+        if (typeof options == 'undefined') options = {};
         this.onStart = options.onStart; // (function) Callback on listening start
         this.onResult = onResult; // (function) Callback on speech recognition result
         this.onError = options.onError; // (function) Callback on error
