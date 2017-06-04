@@ -2,8 +2,8 @@
 // (cc) 2017 Jam Zhang & Antony Zhu
 //
 // Usage
-// cordova.plugins.Speech.start
-// 
+// cordova.plugins.Speech.startDictation()
+// cordova.plugins.Speech.stopDictation()
 
 //var exec = require('cordova/exec');
 //
@@ -11,9 +11,6 @@
 //    exec(success, error, "BLSpeechRecognition", "coolMethod", [arg0]);
 //};
 
-/**
- * Created by Edc.zhang on 2017/2/13.
- */
 var cordova = require('cordova'),
     channel = require('cordova/channel'),
     exec = require('cordova/exec');
@@ -36,32 +33,6 @@ var Speech = function() {
         'SpeakCancel': channel.create('SpeakCancel'),
         'BufferProgress': channel.create('BufferProgress')
     };
-//    this.voice_names = {
-//        'xiaoyan' : '小燕',
-//        'xiaoyu' : '小宇',
-//        'vixy' : '小研',
-//        'vixq' : '小琪',
-//        'vixf' : '小峰',
-//        'vixm' : '香港小梅',
-//        'vixl' : '台湾小莉',
-//        'vixr' : '四川妹纸',
-//        'vixyun' : '东北小芸',
-//        'vixk' : '河南小坤',
-//        'vixqa' : '湖南小强',
-//        'vixying' : '陕西小莹',
-//        'vixx' : '蜡笔小新',
-//        'vinn' : '楠楠',
-//        'vils' : '孙大爷',
-//        'Catherine' : '美国Catherine',
-//        'henry' : '美国Henry',
-//        'vimary' : '英国Mary',
-//        'Mariane' : '法国Mariane',
-//        'Guli' : '维族Guli',
-//        'Allabent' : '俄国Allabent',
-//        'Gabriela' : '西班牙Gabriela',
-//        'Abha' : '印度Abha',
-//        'XiaoYun' : '越南XiaoYun'
-//    };
     this.init();
     this.msg = "";
 };
@@ -95,26 +66,14 @@ Speech.prototype = {
             speech._eventHandler(info);
         };
         exec(callback, callback, 'Speech', 'login', []);
+        this.addEventListener('SpeechResults', parseResults);
+        this.addEventListener('SpeechError', parseError);
+        this.addEventListener('VolumeChanged', parseVolume);
 
         function parseResults( e ) {
-            
             if (e && e.results && e.results.length) { // Heard something
-                    if(typeof speech.onResult === 'function') speech.onResult(e.results);
-                }
-//            }
-            
-//            // Continuous dictation
-//            if (speech.isListening && speech.continuous) speech.timeoutID = setTimeout(function() {
-//                speech.startDictation(speech.onResult, {
-//                    onStart: speech.onStart,
-//                    onError: speech.onError,
-//                    onVolume: speech.onVolume,
-//                    continuous: speech.continuous,
-//                    showUI: speech.showUI,
-//                    showPunctuation: speech.showPunctuation
-//                });
-//            }, 50);
-//            
+                if(typeof speech.onResult === 'function') speech.onResult(e.results);
+            }
         }
         
         function parseError( e ) {
@@ -128,10 +87,6 @@ Speech.prototype = {
             }
         }
         
-        this.addEventListener('SpeechResults', parseResults);
-        this.addEventListener('SpeechError', parseError);
-        this.addEventListener('VolumeChanged', parseVolume);
-
     },
 
     // Method to start dictation
@@ -156,26 +111,6 @@ Speech.prototype = {
 //        clearTimeout(this.timeoutID);
         exec(null, null, 'Speech', 'stopListening', []);
     },
-
-//    cancelListening: function() {
-//        exec(null, null, 'Speech', 'cancelListening', []);
-//    },
-//
-//    startSpeak: function(success,error,text) {
-//        exec(null, null, 'Speech', 'startSpeaking', [text, {voice_name: 'xiaoyan'}]);
-//    },
-//
-//    pauseSpeaking: function() {
-//        exec(null, null, 'Speech', 'pauseSpeaking', []);
-//    },
-//
-//    resumeSpeaking: function() {
-//        exec(null, null, 'Speech', 'resumeSpeaking', []);
-//    },
-//
-//    stopSpeak: function() {
-//        exec(null, null, 'Speech', 'stopSpeaking', []);
-//    }
 
 };
 
