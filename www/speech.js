@@ -1,3 +1,10 @@
+// iOS 10 Native Speech Recognition Cordova Plugin
+// (cc) 2017 Jam Zhang & Antony Zhu
+//
+// Usage
+// cordova.plugins.Speech.start
+// 
+
 //var exec = require('cordova/exec');
 //
 //exports.coolMethod = function(arg0, success, error) {
@@ -29,34 +36,34 @@ var Speech = function() {
         'SpeakCancel': channel.create('SpeakCancel'),
         'BufferProgress': channel.create('BufferProgress')
     };
-    this.voice_names = {
-        'xiaoyan' : '小燕',
-        'xiaoyu' : '小宇',
-        'vixy' : '小研',
-        'vixq' : '小琪',
-        'vixf' : '小峰',
-        'vixm' : '香港小梅',
-        'vixl' : '台湾小莉',
-        'vixr' : '四川妹纸',
-        'vixyun' : '东北小芸',
-        'vixk' : '河南小坤',
-        'vixqa' : '湖南小强',
-        'vixying' : '陕西小莹',
-        'vixx' : '蜡笔小新',
-        'vinn' : '楠楠',
-        'vils' : '孙大爷',
-        'Catherine' : '美国Catherine',
-        'henry' : '美国Henry',
-        'vimary' : '英国Mary',
-        'Mariane' : '法国Mariane',
-        'Guli' : '维族Guli',
-        'Allabent' : '俄国Allabent',
-        'Gabriela' : '西班牙Gabriela',
-        'Abha' : '印度Abha',
-        'XiaoYun' : '越南XiaoYun'
-    };
-    this.login();
-    this.msg = "";
+//    this.voice_names = {
+//        'xiaoyan' : '小燕',
+//        'xiaoyu' : '小宇',
+//        'vixy' : '小研',
+//        'vixq' : '小琪',
+//        'vixf' : '小峰',
+//        'vixm' : '香港小梅',
+//        'vixl' : '台湾小莉',
+//        'vixr' : '四川妹纸',
+//        'vixyun' : '东北小芸',
+//        'vixk' : '河南小坤',
+//        'vixqa' : '湖南小强',
+//        'vixying' : '陕西小莹',
+//        'vixx' : '蜡笔小新',
+//        'vinn' : '楠楠',
+//        'vils' : '孙大爷',
+//        'Catherine' : '美国Catherine',
+//        'henry' : '美国Henry',
+//        'vimary' : '英国Mary',
+//        'Mariane' : '法国Mariane',
+//        'Guli' : '维族Guli',
+//        'Allabent' : '俄国Allabent',
+//        'Gabriela' : '西班牙Gabriela',
+//        'Abha' : '印度Abha',
+//        'XiaoYun' : '越南XiaoYun'
+//    };
+    this.init();
+//    this.msg = "";
 };
 
 Speech.prototype = {
@@ -79,19 +86,17 @@ Speech.prototype = {
         }
     },
 
-    login: function() {
+    init: function() {
         // closure variable for local function to use
         var speech = this;
 
         // the callback will be saved in the session for later use
-        var callback = function(info) {
-            speech._eventHandler(info);
-        };
-        exec(callback, callback, 'Speech', 'login', []);
+//        var callback = function(info) {
+//            speech._eventHandler(info);
+//        };
+//        exec(callback, callback, 'Speech', 'login', []);
 
         function parseResults( e ) {
-            
-//            console.log('parseResults', e);
             
             if (e && e.results && e.results.length) { // Heard something
                     if(typeof speech.onResult === 'function') speech.onResult(e.results);
@@ -100,7 +105,7 @@ Speech.prototype = {
             
 //            // Continuous dictation
 //            if (speech.isListening && speech.continuous) speech.timeoutID = setTimeout(function() {
-//                speech.startListen(speech.onResult, {
+//                speech.startDictation(speech.onResult, {
 //                    onStart: speech.onStart,
 //                    onError: speech.onError,
 //                    onVolume: speech.onVolume,
@@ -131,8 +136,8 @@ Speech.prototype = {
 
     // Method to start dictation
     // Dictation ends after a short break after speech, or about 8 seconds of silence
-    startListen: function(onResult, options) {
-        console.log('speech.startListen 01');
+    startDictation: function(onResult, options) {
+        console.log('Speech.startDictation');
         this.isListening = true;
         if (typeof options == 'undefined') options = {};
         this.onStart = options.onStart; // (function) Callback on listening start
@@ -143,35 +148,34 @@ Speech.prototype = {
         this.showUI = options.showUI; // Show iFly buil-in UI overlay
         this.showPunctuation = options.showPunctuation; // Recognize punctuation in speech
         exec(null, null, 'Speech', 'startListening', [{language:'zh_cn', accent:'mandarin'}, options.showUI, options.showPunctuation]);
-        console.log('speech.startListen 02');
         if(typeof this.onStart === 'function') this.onStart();
     },
 
-    stopListen: function() {
+    stopDictation: function() {
         this.isListening = false;
-        clearTimeout(this.timeoutID);
+//        clearTimeout(this.timeoutID);
         exec(null, null, 'Speech', 'stopListening', []);
     },
 
-    cancelListening: function() {
-        exec(null, null, 'Speech', 'cancelListening', []);
-    },
-
-    startSpeak: function(success,error,text) {
-        exec(null, null, 'Speech', 'startSpeaking', [text, {voice_name: 'xiaoyan'}]);
-    },
-
-    pauseSpeaking: function() {
-        exec(null, null, 'Speech', 'pauseSpeaking', []);
-    },
-
-    resumeSpeaking: function() {
-        exec(null, null, 'Speech', 'resumeSpeaking', []);
-    },
-
-    stopSpeak: function() {
-        exec(null, null, 'Speech', 'stopSpeaking', []);
-    }
+//    cancelListening: function() {
+//        exec(null, null, 'Speech', 'cancelListening', []);
+//    },
+//
+//    startSpeak: function(success,error,text) {
+//        exec(null, null, 'Speech', 'startSpeaking', [text, {voice_name: 'xiaoyan'}]);
+//    },
+//
+//    pauseSpeaking: function() {
+//        exec(null, null, 'Speech', 'pauseSpeaking', []);
+//    },
+//
+//    resumeSpeaking: function() {
+//        exec(null, null, 'Speech', 'resumeSpeaking', []);
+//    },
+//
+//    stopSpeak: function() {
+//        exec(null, null, 'Speech', 'stopSpeaking', []);
+//    }
 
 };
 
