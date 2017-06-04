@@ -91,9 +91,9 @@ Speech.prototype = {
         var speech = this;
 
         // the callback will be saved in the session for later use
-//        var callback = function(info) {
-//            speech._eventHandler(info);
-//        };
+        var callback = function(info) {
+            speech._eventHandler(info);
+        };
         exec(callback, callback, 'Speech', 'login', []);
 
         function parseResults( e ) {
