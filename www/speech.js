@@ -63,7 +63,7 @@ var Speech = function() {
 //        'XiaoYun' : '越南XiaoYun'
 //    };
     this.init();
-//    this.msg = "";
+    this.msg = "";
 };
 
 Speech.prototype = {
@@ -94,7 +94,7 @@ Speech.prototype = {
 //        var callback = function(info) {
 //            speech._eventHandler(info);
 //        };
-//        exec(callback, callback, 'Speech', 'login', []);
+        exec(callback, callback, 'Speech', 'login', []);
 
         function parseResults( e ) {
             
@@ -147,7 +147,7 @@ Speech.prototype = {
         this.continuous = options.continuous; // (boolean) If automatically start listening after previous recognition
         this.showUI = options.showUI; // Show iFly buil-in UI overlay
         this.showPunctuation = options.showPunctuation; // Recognize punctuation in speech
-        exec(null, null, 'Speech', 'startListening', [{language:'zh_cn', accent:'mandarin'}, options.showUI, options.showPunctuation]);
+        exec(null, null, 'Speech', 'startListening', [{language:'zh_cn', accent:'mandarin'}]);
         if(typeof this.onStart === 'function') this.onStart();
     },
 
