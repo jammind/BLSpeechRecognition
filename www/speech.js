@@ -95,6 +95,7 @@ Speech.prototype = {
         console.log('Speech.startDictation');
         this.isListening = true;
         if (typeof options == 'undefined') options = {};
+        if (!options.language) options.language = 'en-US';
         this.onStart = options.onStart; // (function) Callback on listening start
         this.onResult = onResult; // (function) Callback on speech recognition result
         this.onError = options.onError; // (function) Callback on error
@@ -102,7 +103,7 @@ Speech.prototype = {
         this.continuous = options.continuous; // (boolean) If automatically start listening after previous recognition
         this.showUI = options.showUI; // Show iFly buil-in UI overlay
         this.showPunctuation = options.showPunctuation; // Recognize punctuation in speech
-        exec(null, null, 'Speech', 'startListening', [{language:'zh_cn', accent:'mandarin'}]);
+        exec(null, null, 'Speech', 'startListening', [{language: options.language}]);
         if(typeof this.onStart === 'function') this.onStart();
     },
 
