@@ -113,7 +113,7 @@ Speech.prototype = {
         this.continuous = options.continuous; // (boolean) If automatically start listening after previous recognition
         this.showUI = options.showUI; // Show iFly buil-in UI overlay
         this.showPunctuation = options.showPunctuation; // Recognize punctuation in speech
-        exec(null, null, 'Speech', 'startListening', [{options.language}]);
+        exec(null, null, 'Speech', 'startListening', [{language: options.language}]);
         if(typeof this.onStart === 'function') this.onStart();
     },
 
