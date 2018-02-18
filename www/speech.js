@@ -90,7 +90,17 @@ Speech.prototype = {
     },
 
     // Method to start dictation
-    // Dictation ends after a short break after speech, or about 8 seconds of silence
+    // Dictation ends after a short break after speech, or about 1 seconds of silence
+    // @param onResult (function) Callback invoked when a speech result is recognized
+    // @param options (object)
+    // - language (string) Locale of speech language
+    // Supported locale identifiers are
+    // "nl-NL","es-MX","zh-TW","fr-FR","it-IT","vi-VN","fr-CH","en-ZA","ca-ES","ko-KR","es-CL","ro-RO",
+    // "en-PH","en-CA","en-SG","en-IN","en-NZ","it-CH","fr-CA","hi-IN","da-DK","de-AT","pt-BR",
+    // "yue-CN","zh-CN","sv-SE","hi-IN-translit","es-ES","hu-HU","ar-SA","fr-BE","en-GB","ja-JP",
+    // "zh-HK","fi-FI","tr-TR","nb-NO","en-ID","en-SA","pl-PL","id-ID","ms-MY","el-GR",
+    // "cs-CZ","hr-HR","en-AE","he-IL","ru-RU","wuu-CN","de-CH","en-AU","de-DE","nl-BE","th-TH","pt-PT",
+    // "sk-SK","en-US","en-IE","es-CO","hi-Latn","uk-UA","es-US"
     startDictation: function(onResult, options) {
         console.log('Speech.startDictation');
         this.isListening = true;
@@ -103,7 +113,7 @@ Speech.prototype = {
         this.continuous = options.continuous; // (boolean) If automatically start listening after previous recognition
         this.showUI = options.showUI; // Show iFly buil-in UI overlay
         this.showPunctuation = options.showPunctuation; // Recognize punctuation in speech
-        exec(null, null, 'Speech', 'startListening', [{language: options.language}]);
+        exec(null, null, 'Speech', 'startListening', options.language);
         if(typeof this.onStart === 'function') this.onStart();
     },
 
