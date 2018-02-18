@@ -6,7 +6,7 @@
     </js-module><platform name="ios">
         <config-file parent="/*" target="config.xml">
             <feature name="Speech">
-                <param name="ios-package" value="Speech" />
+                <param name="ios-package" value="BLSpeechRecognition" />
             </feature>
         </config-file>
         <source-file src="src/ios/BLSpeechRecognition.m" />
