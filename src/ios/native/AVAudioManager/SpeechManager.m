@@ -46,7 +46,7 @@
 /** 设置录音环境 */
 - (void)setupRecorder {
     // 1. 音频会话
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord error:NULL];
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryMultiRoute error:NULL];
     
     // 参数设置
     NSDictionary *recordSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
